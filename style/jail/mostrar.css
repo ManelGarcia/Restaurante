@@ -1,0 +1,345 @@
+/* Estilos generales para todos los elementos con la fuente 'Dosis' */
+* {
+    font-family: 'Dosis', sans-serif;
+}
+
+/* Estilos para la clase 'style-1' */
+.style-1 {
+    background-color: FireBrick;
+    color: white;
+}
+
+/* Estilos para la clase 'style-2' */
+.style-2 {
+    background-color: SeaGreen;
+    color: white;
+}
+
+/* Estilos para las tablas con esquinas redondeadas */
+.tablas {
+    border-radius: 5px 5px 5px 5px !important;
+}
+
+/* Estilos para las pestañas y su contenedor */
+.tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    padding-right: 28px;
+}
+
+/* Estilos para cada pestaña */
+.tab {
+    margin-left: 40px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    border-radius: 5px 5px 5px 5px;
+}
+
+/* Estilo para elementos bloque */
+.block {
+    display: block;
+}
+
+/* Estilos para la pestaña con id 'tab1' */
+#tab1 {
+    justify-content: space-between;
+}
+
+/* Estilos para la pestaña con id 'tab2' */
+#tab2 {
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos para la pestaña con id 'tab3' */
+#tab3 {
+    justify-content: space-between;
+}
+
+/* Estilos para pestañas pequeñas */
+.tab-small {
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border: 0.5px solid #ccc;
+    background-color: #f2f2f2;
+    border-radius: 2px 2px 0 0;
+}
+
+/* Efecto de hover en las pestañas */
+.tab:hover {
+    background-color: #ddd;
+}
+
+/* Nueva pestaña con estilos diferentes */
+.tab-otro {
+    margin-left: 24%;
+    width: 55% !important;
+    display: none;
+    padding: 16px !important;
+}
+
+/* Estilos para las imágenes dentro del contenido de las pestañas */
+.tab-content img {
+    max-width: 70vw;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+    float: left;
+    padding: 3px;
+}
+
+/* Mostrar contenido activo */
+.tab-content.active {
+    display: block;
+}
+
+/* Estilos para imágenes de planos y su tamaño */
+.floorPlan {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100vh;
+    max-width: 50vw;
+}
+
+.floorPlanVips {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50vh;
+}
+
+/* Estilos para diferentes secciones de imágenes */
+#comedor1, #comedor2, #terraza1, #terraza2, #terraza3, #privada1, #privada2, #privada3, #privada4 {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Estilos para las mesas con cursor */
+.mesa {
+    cursor: pointer;
+}
+
+/* Estilos para imágenes con espaciado a la izquierda */
+.img {
+    padding-left: 70px;
+}
+
+/**********************************************************************************************************/
+
+/* Estilos para el cuerpo de la página y fondo */
+body {
+    background-image: url(../img/fondo3\ \(1\).jpg);
+    margin-top: 50px;
+}
+
+/* Fondo oscuro con opacidad mediante el pseudo-elemento 'before' */
+body::before {
+    content: "";
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000000b6;
+    z-index: -1;
+}
+
+/* Estilos para tablas con espaciado y bordes */
+table {
+    border-spacing: 0 3px;
+    border-color: #000000;
+    border-collapse: collapse;
+    width: 40px;
+}
+
+/* Estilos para el encabezado flotante */
+.header {
+    float: left;
+}
+
+/* Estilos para títulos en tablas */
+.titulos {
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top: 2px solid black;
+}
+
+/* Estilos generales para tablas y texto en tablas */
+.table {
+    color: #000000;
+}
+
+.table td,
+.table th {
+    border-top: 1px solid #03cc57;
+    color: white;
+}
+
+/* Estilos para el título principal con fuente dual */
+#titulo {
+    display: flex;
+    justify-content: center;
+    font-size: 4.5rem;
+    color: #03cc57;
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Trispace', sans-serif; /* ¿Esta línea está duplicada por error? */
+    padding-right: 130px;
+}
+
+/* Estilos para el encabezado centrado */
+header {
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilos para centrar elementos */
+#centrar {
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilos para el botón de filtrar */
+#filtrar {
+    border-radius: 1vh 1vh 1vh 1vh;
+    background-color: #000000;
+}
+
+/* Estilos para los filtros con transición */
+#filtros {
+    border-radius: 1vh 1vh 1vh 1vh;
+    border: 3px solid #03cc57;
+    background-color: #000000;
+    color: white;
+    transition: all 0.3s ease 0s;
+}
+
+/* Efecto de hover en los filtros */
+#filtros:hover {
+    background: #03cc57;
+    color: black;
+}
+
+/* Estilos para textos generales */
+.textos {
+    color: white;
+    font-size: 18px;
+}
+
+/* Estilos para el segundo tipo de textos */
+.textos2 {
+    color: white;
+    font-size: 24px;
+    padding-left: 70px;
+}
+
+/* Estilos para el tercer tipo de texto */
+.texto3 {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 110px;
+    padding-top: 60px;
+    font-size: 40px;
+}
+
+/* Estilos para el primer icono */
+#icono {
+    float: left;
+    width: 50px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+/* Estilos para el segundo icono */
+#icono2 {
+    float: left;
+    width: 50px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+/* Estilos para la primera sección con posición relativa */
+.div1 {
+    position: relative;
+}
+
+/* Estilos para la segunda sección con posición absoluta y transición de opacidad */
+.div1 .div2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+/* Efecto de opacidad al pasar el ratón sobre la sección */
+.div1:hover .div2 {
+    opacity: 1;
+}
+
+/* Estilos para un contenedor flex con justificación y alineación centradas */
+.flex {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Estilos para iconos flotantes */
+.iconos {
+    float: left;
+}
+
+/* Estilos para la ubicación con texto centrado y dimensiones específicas */
+.ubicacion {
+    text-align: center;
+    width: 60%;
+    height: 30%;
+}
+
+/***********************************/
+
+/* Estilos para el botón con posición relativa */
+.btn {
+    position: relative;
+    padding: 20px 50px;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 5px;
+    text-indent: 10px;
+    z-index: 2;
+    font-size: 20px;
+}
+
+/* Estilos para el botón con efecto de bordes redondeados */
+.btn-1 {
+    overflow: hidden;
+    border: 3px solid #03cc57;
+    z-index: 2;
+}
+
+/* Efecto de expansión del botón al pasar el ratón sobre él */
+.btn-1::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    left: 0;
+    top: -200%;
+    background-color: #03cc57;
+    border-radius: 50%;
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+
+/* Efecto de hover que muestra el fondo del botón */
+.btn-1:hover:before {
+    top: 0;
+    border-radius: 0%;
+}

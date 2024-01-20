@@ -1,0 +1,133 @@
+/* Decimos que toda la página no tenga margin, ni padding, que tenga la siguiente fuente como predeterminada y que la letra sea de color blanca*/
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+    color: white;
+}
+
+/*Este body servirá para poner el fondo*/
+body::before {
+    content: "";
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/alien.png");
+    background-size: cover;
+    z-index: -1;
+}
+
+/*Creamos el contenedor que contendrá los campos para registrarse con un usuario y contraseña (ya registrados)*/
+.container {
+    width: 400px;
+    padding: 4vh;
+    padding-bottom: 2vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    animation: fade-in 1s ease-in-out;
+    border-radius: 4vh;
+}
+
+/*Definimos características de la fuente del título*/
+#titulo {
+    font-weight: 500;
+    font-size: 3.5vh;
+}
+
+/*Creamos una clase para la fuente que utilizaremos para toda la página (menos los textos que introduciremos en los inputs)*/
+.letra {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+/*Creamos una capa semitransparente que cubra toda la página*/
+#oscuro {
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/*Creamos un efecto para que parezca que el contenedor venga de arriba*/
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*Le añadimos un margin-top para centrar el contenedor*/
+.container {
+    margin-top: -10vh;
+}
+
+/*Le añadimos margenes a los inputs*/
+.inputs {
+    margin-top: 2vh;
+    margin-right: 2vh;
+}
+
+/*Le añadimos margen para separar el texto del input y el display block */
+.inputs label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/*Le añadimos las siguientes características a los inputs*/
+.form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*Le añadimos las siguientes características al botón*/
+.boton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 2vh;
+    border: none;
+    background: white;
+    color: #05493d;
+    border-radius: 4vh;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton:hover {
+    background-color: #05493d;
+    color: white;
+    transition: 0.3s;
+}
+/*Creamos una clase para el flex*/
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*Creamos una clase para el texto de los errores de JS salgan de color rojo*/
+span {
+    color: red;
+}
+
+/*Creamos algunas características responsive*/
+@media only screen and (max-width: 780px) {
+    .nav img {
+        height: 6vh;
+    }
+    .container {
+        width: 290px;
+        padding: 4vh;
+        padding-bottom: 2vh;
+    }
+}
