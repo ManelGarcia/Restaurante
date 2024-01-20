@@ -59,7 +59,6 @@ function openAlert(id, nombre) {
 }
 
 // Funcion que pide el select de las mesa de la misma sala
-
 function showMesaDisp(id) {
     var jsonData2 = {
         selector: id,
@@ -76,10 +75,13 @@ function showMesaDisp(id) {
 
     xhr1.onreadystatechange = function() {
         if (xhr1.readyState == 4 && xhr1.status == 200) {
-            var alerta = xhr1.responseText;
+            var selectMesas = xhr1.responseText;
             var divAlerta = document.getElementById('sillas-plus');
-            divAlerta.innerHTML = alerta;
-            // showMesaDisp();
+            divAlerta.innerHTML = selectMesas;
+
+            console.log(selectMesas);
+
+            showSillaDisp()
         }
     }
 
@@ -91,6 +93,11 @@ function showSillaDisp() {
     var selectMesa = document.getElementById('select-mesa');
 
     selectMesa.addEventListener("change", function(e) {
+
+        if (selectMesa.value == 0) {
+            console.log('no')
+        } else {
+
         var smesa = selectMesa.value;
 
         if (smesa != null) {
@@ -107,9 +114,7 @@ function showSillaDisp() {
             xhr1.setRequestHeader('Content-type', 'application/json');
 
             xhr1.onreadystatechange = function() {
-                var sillas = document.getElementById("sillas-plus" + smesa);
-
-                console.log(xhr1.responseText);
+                var sillas = document.getElementById("sillas-num");
 
                 if (xhr1.responseText == 0) {
                     sillas.innerHTML = '0';
@@ -121,6 +126,7 @@ function showSillaDisp() {
 
             xhr1.send(jsonObject2);
         }
+    }
     });
 
 }

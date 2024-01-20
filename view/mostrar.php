@@ -46,7 +46,8 @@ session_start();
         .alert-box {
             background: #fff;
             padding: 20px;
-            margin: 20vh 32vw;
+            margin-top: 15%;
+            margin-left: 35%;
             width: 30rem;
             height: 20rem;
             border-radius: 5px;
