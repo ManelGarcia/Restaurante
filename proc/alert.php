@@ -25,7 +25,7 @@
                         <span>Sillas en '.$nombreMesa.'</span>
                         <input id="" type="number" min="0" max="'.$valor2['id_sillas'].'" value="'.$valor2['id_sillas'].'"><br><br>
                         <button class="close-btn" onclick="reservar('.$selMesa.')">Reservar</button>
-                        <button class="close-btn" onclick="ocupar('.$selMesa.')">Ocupar</button>
+                        <button class="close-btn" onclick="ocupar('.$selMesa.')">Ocupar/Desocupar</button>
                         <button class="close-btn" onclick="closeAlert('.$selMesa.')">Cancelar</button>
                     </div>
                 </div>';

@@ -151,7 +151,7 @@ function ocupar(id_mesa) {
         accion: 'ocupar',
     };
 
-    estado(jsonData)
+    cambiarEstado(jsonData)
 }
 
 function reservar(id_mesa) {
@@ -175,7 +175,7 @@ function reservar(id_mesa) {
         accion: 'reservar',
     };
 
-    estado(jsonData)
+    cambiarEstado(jsonData)
 }
 
 function cambiarEstado(jsonData) {
