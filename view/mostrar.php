@@ -53,6 +53,19 @@ session_start();
             border-radius: 5px;
             text-align: center;
         }
+
+        .left-box {
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        
+        .right-box {
+            float: right;
+            width: 50%;
+            height: 100%;
+        }
         
     </style>
     </head>

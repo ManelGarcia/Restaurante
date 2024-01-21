@@ -88,7 +88,7 @@ function showMesaDisp(id) {
     xhr1.send(jsonObject2)
 }
 
-
+// Funcion que pide el numero de sillas en la mesa del select anterior
 function showSillaDisp() {
     var selectMesa = document.getElementById('select-mesa');
 
@@ -132,10 +132,65 @@ function showSillaDisp() {
 }
 
 
-function closeAlert(id) {
+function closeAlert() {
     document.getElementById('alerta').innerHTML = null;
 }
 
-function reservar(id_mesa) {
+function ocupar(id_mesa) {
+    var mesaPlus = document.getElementById('select-mesa').value;
+    var sillaPlus = document.getElementById('sillas-num').value;
 
+    console.log('Id mesa: ' + id_mesa);
+    console.log('Id otra: ' + mesaPlus);
+    console.log('N sillas otra: ' + sillaPlus);
+
+    var jsonData = {
+        id_mesa: id_mesa,
+        mesaPlus: mesaPlus,
+        sillaPlus: sillaPlus,
+        accion: 'ocupar',
+    };
+
+    estado(jsonData)
+}
+
+function reservar(id_mesa) {
+    var fechaIni = document.getElementById('fecha-ini').value;
+    var horaIni = document.getElementById('hora-ini').value;
+    var mesaPlus = document.getElementById('select-mesa').value;
+    var sillaPlus = document.getElementById('sillas-num').value;
+
+    console.log('Id mesa: ' + id_mesa);
+    console.log('Fecha inicio: ' + fechaIni);
+    console.log('Hora inicio: ' + horaIni);
+    console.log('Id otra: ' + mesaPlus);
+    console.log('N sillas otra: ' + sillaPlus);
+
+    var jsonData = {
+        id_mesa: id_mesa,
+        fechaIni: fechaIni,
+        horaIni: horaIni,
+        mesaPlus: mesaPlus,
+        sillaPlus: sillaPlus,
+        accion: 'reservar',
+    };
+
+    estado(jsonData)
+}
+
+function cambiarEstado(jsonData) {
+
+    var jsonObject = JSON.stringify(jsonData);
+
+    var xhr = new XMLHttpRequest();
+    var url = '../proc/reserva-ocupacion.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        console.log(xhr.responseText);
+    };
+
+    xhr.send(jsonObject);
 }

@@ -17,14 +17,15 @@
                     <div class="alert-box">
                         <h2>Reservar Mesa</h2>
                         <label for="fecha-ini">Inicio reserva</label>
-                        <input id="fecha-ini'.$selMesa.'" type="date">
-                        <input id="" type="time"><br><br>
+                        <input id="fecha-ini" type="date">
+                        <input id="hora-ini" type="time"><br><br>
                         <label for="n-sillas">Añadir Sillas</label><br><br>
                         <span>Sillas en</span>
                         <span id="sillas-plus"></span><span id="sillas-num"></span><br>
                         <span>Sillas en '.$nombreMesa.'</span>
                         <input id="" type="number" min="0" max="'.$valor2['id_sillas'].'" value="'.$valor2['id_sillas'].'"><br><br>
-                        <button class="close-btn" onclick="reservar('.$selMesa.')">Aceptar</button>
+                        <button class="close-btn" onclick="reservar('.$selMesa.')">Reservar</button>
+                        <button class="close-btn" onclick="ocupar('.$selMesa.')">Ocupar</button>
                         <button class="close-btn" onclick="closeAlert('.$selMesa.')">Cancelar</button>
                     </div>
                 </div>';
