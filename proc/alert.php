@@ -21,9 +21,8 @@
                         <input id="hora-ini" type="time"><br><br>
                         <label for="n-sillas">Añadir Sillas</label><br><br>
                         <span>Sillas en</span>
-                        <span id="sillas-plus"></span><span id="sillas-num"></span><br>
-                        <span>Sillas en '.$nombreMesa.'</span>
-                        <input id="" type="number" min="0" max="'.$valor2['id_sillas'].'" value="'.$valor2['id_sillas'].'"><br><br>
+                        <span id="sillas-plus"></span>
+                        <input id="sillas-num" type="number" min="0" max=""><br><br>
                         <button class="close-btn" onclick="reservar('.$selMesa.')">Reservar</button>
                         <button class="close-btn" onclick="ocupar('.$selMesa.')">Ocupar/Desocupar</button>
                         <button class="close-btn" onclick="closeAlert('.$selMesa.')">Cancelar</button>

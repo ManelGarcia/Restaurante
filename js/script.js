@@ -94,10 +94,6 @@ function showSillaDisp() {
 
     selectMesa.addEventListener("change", function(e) {
 
-        if (selectMesa.value == 0) {
-            console.log('no')
-        } else {
-
         var smesa = selectMesa.value;
 
         if (smesa != null) {
@@ -116,17 +112,14 @@ function showSillaDisp() {
             xhr1.onreadystatechange = function() {
                 var sillas = document.getElementById("sillas-num");
 
-                if (xhr1.responseText == 0) {
-                    sillas.innerHTML = '0';
-                } else {
-                    sillas.innerHTML = xhr1.responseText;
-                }
+                sillas.value = 0;
+                sillas.setAttribute("max", xhr1.responseText)
+
 
             };
 
             xhr1.send(jsonObject2);
         }
-    }
     });
 
 }
@@ -158,7 +151,7 @@ function reservar(id_mesa) {
     var fechaIni = document.getElementById('fecha-ini').value;
     var horaIni = document.getElementById('hora-ini').value;
     var mesaPlus = document.getElementById('select-mesa').value;
-    var sillaPlus = document.getElementById('sillas-num').value;
+    var sillaPlus = document.getElementById('sillas-nuevas').value;
 
     console.log('Id mesa: ' + id_mesa);
     console.log('Fecha inicio: ' + fechaIni);
