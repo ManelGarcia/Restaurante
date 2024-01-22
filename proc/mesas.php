@@ -38,7 +38,26 @@
             echo $select;
         } else {
             foreach ($resultado as $valor) {
-                echo '<p onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)" >hTTd</p>';
+
+                $sql_reserva = $pdo -> prepare("SELECT * FROM reservas WHERE mesa_res = :im");
+                
+                $sql_reserva -> bindParam(":im", $valor['id_mesa']);
+                $sql_reserva -> execute();
+                $resultado_reserva = $sql_reserva -> fetchAll(PDO::FETCH_ASSOC);
+
+                if ($valor['estado_mesa'] == 1) {
+                    $clases = 'ocupado ';
+                } elseif ($valor['estado_mesa'] == 2) {
+                    $clases = 'libre ';
+                } else {
+                    $clases = 'mantenimiento ';
+                }
+
+                if (!empty($resultado_reserva)) {
+                    $clases .= 'reservado';
+                }
+
+                echo '<p onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)" class="'.$clases.'" >hTTd</p>';
             }
         }
 

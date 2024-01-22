@@ -5,24 +5,23 @@ $jsonObject = json_decode(file_get_contents("php://input"), true);
 
 $idMesa = $jsonObject['id_mesa'];
 
-if (isset($jsonObject['fechaIni']) != 0 && isset($jsonObject['horaIni']) != 0) {
-    $fechaIni = $jsonObject['fechaIni'];
-    $horaIni = $jsonObject['horaIni'];
-
-} else {
+if (empty($jsonObject['fechaIni']) && empty($jsonObject['horaIni'])) {
     $fechaIni = date('Y-m-d');
     $horaIni = date('H:i');
     
     $fechaHora = $fechaIni.' '.$horaIni;
-}
 
-echo $jsonObject['accion'];
+} else {
+    $fechaIni = $jsonObject['fechaIni'];
+    $horaIni = $jsonObject['horaIni'];
+
+    $fechaHora = $fechaIni.' '.$horaIni;
+}
 
 if (isset($jsonObject['mesaPlus']) && isset($jsonObject['sillaPlus'])) {
     $mesaPlus = $jsonObject['mesaPlus'];
     $sillaPlus = $jsonObject['sillaPlus'];
 }
-
 
 include_once('./conexion.php');
 
@@ -59,13 +58,10 @@ try {
             $sql_update_tiempo -> bindParam(":ic", $resultado2[0]['id_usuario']);
             $sql_update_tiempo -> execute();
 
-            if (isset($mesaPlus) && isset($sillaPlus)) {
-                $sql_mover_sillas = $pdo -> prepare("UPDATE sillas SET mesa_act = mesa_asig WHERE mesa_act = :im");
+            $sql_mover_sillas = $pdo -> prepare("UPDATE sillas SET mesa_act = mesa_asig WHERE mesa_act = :im");
 
-                $sql_mover_sillas -> bindParam(":im", $idMesa);
-                $sql_mover_sillas -> execute();    
-            }
-
+            $sql_mover_sillas -> bindParam(":im", $idMesa);
+            $sql_mover_sillas -> execute();    
 
     
         } elseif ($resultado[0]['estado_mesa'] == 2 || $resultado[0]['estado_mesa'] == 3) {
@@ -93,23 +89,47 @@ try {
 
         }   
     } elseif ($jsonObject['accion'] == 'reservar') {
-        // $sql3 = $pdo -> prepare("INSERT INTO ");
+        $time = strtotime($fechaHora);
+        $newTime = $time + (20 * 60);
+        $fechaHoraFin = date("Y-m-d H:i:s", $newTime);
+
+        $sql3 = $pdo -> prepare("INSERT INTO reservas (inicio_res, final_res, mesa_res, camarero_res) VALUES (:ta, :ft, :im, :ic)");
     
-        // $sql3 -> bindParam(":im", $idMesa);
-        // $sql3 -> execute();    
+        $sql3 -> bindParam(":ta", $fechaHora);        
+        $sql3 -> bindParam(":ft", $fechaHoraFin);
+        $sql3 -> bindParam(":im", $idMesa);
+        $sql3 -> bindParam(":ic", $resultado2[0]['id_usuario']);
+        $sql3 -> execute();    
 
-        // $sql_update_tiempo = $pdo -> prepare("UPDATE tiempo SET final_tmp = :ta WHERE mesa_tmp = :im AND camarero_tmp = :ic AND final_tmp IS NULL");
+        $lastID = $pdo -> lastInsertId('id_reservas');
 
-        // $sql_update_tiempo -> bindParam(":ta", $fechaHora);
-        // $sql_update_tiempo -> bindParam(":im", $idMesa);
-        // $sql_update_tiempo -> bindParam(":ic", $resultado2[0]['id_usuario']);
+        if (isset($mesaPlus) && isset($sillaPlus)) {
+            $sql_mover_sillas = $pdo -> prepare("SELECT id_sillas FROM sillas WHERE mesa_asig = :im LIMIT :sp");
 
-        // $sql_update_tiempo -> execute();
+            $sql_mover_sillas -> bindParam(":im", $mesaPlus);
+            $sql_mover_sillas -> bindValue (":sp", $sillaPlus, PDO::PARAM_INT);
+            $sql_mover_sillas -> execute();
+            $resultado_sillas = $sql_mover_sillas -> fetchAll(PDO::FETCH_ASSOC);
+
+
+            foreach ($resultado_sillas as $valor_sillas) {
+                $sql_reservar_sillas = $pdo -> prepare("INSERT INTO sillas_reservas (id_sillas, id_reservas) VALUES (:ii, :ir)");
+
+                $sql_reservar_sillas -> bindParam(":ii", $valor_sillas['id_sillas']);
+                $sql_reservar_sillas -> bindParam(":ir", $lastID);
+                $sql_reservar_sillas -> execute();
+            }
+
+            $sql3 = $pdo -> prepare("UPDATE reservas SET silla_res VALUES (:ta, :ft, :im, :ic)");
+    
+            $sql3 -> bindParam(":ta", $fechaHora);        
+            $sql3 -> bindParam(":ft", $fechaHoraFin);
+            $sql3 -> bindParam(":im", $idMesa);
+            $sql3 -> bindParam(":ic", $resultado2[0]['id_usuario']);
+            $sql3 -> execute();    
+
+        }
     }
-
-
-
-
 
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "<br>";

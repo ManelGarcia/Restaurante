@@ -66,6 +66,22 @@ session_start();
             width: 50%;
             height: 100%;
         }
+
+        .libre {
+            background-color: green;
+        }
+
+        .ocupado {
+            background-color: red;
+        }
+
+        .mantenimiento {
+            background-color: blue;
+        }
+
+        .reservado {
+            border: 1px solid orange;
+        }
         
     </style>
     </head>

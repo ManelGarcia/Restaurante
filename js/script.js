@@ -5,6 +5,10 @@ var filtro = document.getElementById("filtros_sala");
 // Funcion que pide las mesas de cada sala
 
 filtro.addEventListener("change", (e) => {
+    showMesas();
+})
+
+function showMesas() {
     var sala = filtro.value;
 
     var jsonData1 = {
@@ -27,7 +31,7 @@ filtro.addEventListener("change", (e) => {
     };
 
     xhr.send(jsonObject1);
-})
+}
 
 
 // Funcion que pide la alerta
@@ -79,7 +83,7 @@ function showMesaDisp(id) {
             var divAlerta = document.getElementById('sillas-plus');
             divAlerta.innerHTML = selectMesas;
 
-            console.log(selectMesas);
+            // console.log(selectMesas);
 
             showSillaDisp()
         }
@@ -133,9 +137,9 @@ function ocupar(id_mesa) {
     var mesaPlus = document.getElementById('select-mesa').value;
     var sillaPlus = document.getElementById('sillas-num').value;
 
-    console.log('Id mesa: ' + id_mesa);
-    console.log('Id otra: ' + mesaPlus);
-    console.log('N sillas otra: ' + sillaPlus);
+    // console.log('Id mesa: ' + id_mesa);
+    // console.log('Id otra: ' + mesaPlus);
+    // console.log('N sillas otra: ' + sillaPlus);
 
     var jsonData = {
         id_mesa: id_mesa,
@@ -151,13 +155,13 @@ function reservar(id_mesa) {
     var fechaIni = document.getElementById('fecha-ini').value;
     var horaIni = document.getElementById('hora-ini').value;
     var mesaPlus = document.getElementById('select-mesa').value;
-    var sillaPlus = document.getElementById('sillas-nuevas').value;
+    var sillaPlus = document.getElementById('sillas-num').value;
 
-    console.log('Id mesa: ' + id_mesa);
-    console.log('Fecha inicio: ' + fechaIni);
-    console.log('Hora inicio: ' + horaIni);
-    console.log('Id otra: ' + mesaPlus);
-    console.log('N sillas otra: ' + sillaPlus);
+    // console.log('Id mesa: ' + id_mesa);
+    // console.log('Fecha inicio: ' + fechaIni);
+    // console.log('Hora inicio: ' + horaIni);
+    // console.log('Id otra: ' + mesaPlus);
+    // console.log('N sillas otra: ' + sillaPlus);
 
     var jsonData = {
         id_mesa: id_mesa,
@@ -183,6 +187,8 @@ function cambiarEstado(jsonData) {
 
     xhr.onreadystatechange = function() {
         console.log(xhr.responseText);
+        closeAlert();
+        showMesas();
     };
 
     xhr.send(jsonObject);
