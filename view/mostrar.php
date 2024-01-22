@@ -87,47 +87,15 @@ session_start();
     </head>
 
     <body class="main-body">
-        <!-- Título de la página -->
-        <h1 id="titulo">Mesas</h3>
+        <div>
+            <span onclick='ClickCrud()'>CRUD Usuarios</span><br>
+            <span onclick='ClickCrudM()'>CRUD Materiales</span><br>
+            <span onclick='mesas()'>Mesas</span><br>
+        </div>
+        <div id="body">
 
-        <!-- Contenido principal -->
-        <div class='page-border'>
-            <!-- Mensaje informativo sobre la selección de salas y mesas -->
-            <div class="flex">
-                <p class="content-text textos">Selecciona la sala y pulsa la mesa para indicar que están ocupadas o libres</p>
-            </div>
+        </div>
 
-            <!-- Formulario para filtrar por sala -->
-            <div class='paragraph flex'>
-                <form id='form-filter' method='get'>
-                    <?php
-                        // Obtiene las salas de la base de datos y las muestra en un menú desplegable
-                        include_once('../proc/conexion.php');
-                        try {
-                            $sql1 = $pdo -> prepare("SELECT * FROM ubicacion");
-                            $sql1 -> execute();
-                            
-                            $resultado1 = $sql1->fetchAll(PDO::FETCH_ASSOC);
-                            echo "<select name='sala' class='ubicacion' id='filtros_sala'>";
-                            echo "<option value=''></option>";
-
-                            foreach ($resultado1 as $valor) {
-                                echo "<option value='" . $valor['id_ubicacion'] . "'>" . $valor['lugar'] . "</option>";
-                            }
-                            echo "</select>";
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage() . "<br>";
-                        }
-                    ?>
-                    <!-- Botón para aplicar el filtro -->
-                </form>
-            </div>
-            <div id="mesas-div" class="tab-content flex tab-otro">
-            </div>
-            <br>
-            <div id='alerta'></div>
-
-        <!-- Script JavaScript -->
         <script>
 
         </script>
