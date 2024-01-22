@@ -23,26 +23,34 @@ session_start();
 <body>
     <br>
     <?php
+        echo '<table border="1"><thead><tr><th>Nombre/Identificacion</th><th>Tipo</th><th>Ubicacion</th></tr></thead><tbody>';
+
         $jsonObject1 = json_decode(file_get_contents("php://input"), true);
 
-        $stmt = 'SELECT m.* FROM mesas m INNER JOIN sillas s WHERE 1=1';
+        $stmt1 = 'SELECT m.*, u.lugar AS ubicacion_mesa
+        FROM mesa m
+        JOIN ubicacion u ON m.ubicacion_mesa = u.id_ubicacion;
+        ';
 
-        if (isset($jsonObject1['busqueda'])) {
-            $filter_name = $jsonObject1['busqueda'];
-            $stmt .= ' AND (nombre_mesa LIKE "%'.$filter_name.'%")';
-        }
-
-        if (isset($jsonObject1['orden'])) {
-            $order_by = $jsonObject1['orden']; 
-            $stmt .= ' ORDER BY '.$order_by;
-        }
-
-        $sql1 = $pdo -> prepare($stmt);
+        $sql1 = $pdo -> prepare($stmt1);
         $sql1 -> execute(); 
 
-        echo '<table border="1"><thead><tr><th>Usuario</th><th>Nombre</th><th>E-Mail</th><th>Tipo</th></tr></thead><tbody>';
         while ($row1 = $sql1->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>'.$row1['nombre_us'].'</td><td>'.$row1['email_us'].'</td><td>'.$row1['tipo_us'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
+            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>Mesa</td><td>'.$row1['ubicacion_mesa'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
+        }
+
+
+        $stmt2 = 'SELECT s.*, u.lugar AS ubicacion_silla
+        FROM sillas s
+        JOIN mesa m ON s.mesa_asig = m.id_mesa
+        JOIN ubicacion u ON m.ubicacion_mesa = u.id_ubicacion;
+        ';
+
+        $sql2 = $pdo -> prepare($stmt2);
+        $sql2 -> execute(); 
+
+        while ($row2 = $sql2->fetch(PDO::FETCH_ASSOC)) {
+            echo '<tr><td>'.$row2['id_sillas'].'</td><td>Silla</td><td>'.$row2['ubicacion_silla'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
         }
         echo '</tbody></table>';
     ?>

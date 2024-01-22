@@ -57,20 +57,31 @@
                     $clases .= 'reservado';
                 }
 
-                if (($valor['nca_as'] - $valor['nca_ac']) > 1) {
+                $res = null;
+                $sum = null;
+
+                if (($valor['nca_as'] - $valor['nca_ac']) > 0) {
                     $res = $valor['nca_as'] - $valor['nca_ac'];
-                } elseif (($valor['nca_as'] - $valor['nca_ac']) < 1) {
+                } elseif (($valor['nca_as'] - $valor['nca_ac']) < 0) {
                     $sum = $valor['nca_as'] - $valor['nca_ac'];
                 }
 
                 $sillas = null;
                 if (($valor['nca_as']) != 0) {
                     for ($i = 0; $i < $valor['nca_as']; $i++) {
-                        $sillas .= 'h';
+                        $sillas .= '<div class="silla"></div>';
                     }
                 }
 
-                echo '<p onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)" class="'.$clases.'" >'.$sillas.' TT</p>';
+                // echo '<p  class="'.$clases.'" >'.$sillas.' TT</p>';
+                echo '<div class="' . $clases . '" onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)">';
+                if (isset($res)) {
+                    echo '<h1>+'.$res.'</h1>';
+                } else {
+                    echo ' ';
+                }
+                echo '</div>';
+                
             }
         }
 

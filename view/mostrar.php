@@ -54,33 +54,36 @@ session_start();
             text-align: center;
         }
 
-        .left-box {
-            float: left;
-            width: 50%;
-            height: 100%;
+º       .mesas-div {
+            display: flex;
         }
 
-        
-        .right-box {
-            float: right;
-            width: 50%;
-            height: 100%;
+        .libre, .ocupado, .mantenimiento, .reservado {
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;            
+            width: 5rem;
+            height: 5rem;
+            float: left;
+            margin: 1rem;
+            text-align: center;
+            justify-content: center;
         }
 
         .libre {
-            background-color: green;
+            background-image: url('../img/mesa libre.png');
         }
 
         .ocupado {
-            background-color: red;
+            background-image: url('../img/mesa ocupada.png');
         }
 
         .mantenimiento {
-            background-color: blue;
+            background-image: url('../img/mesa manten.png');
         }
 
         .reservado {
-            border: 1px solid orange;
+            /* background-image: url('../img/mesa libre.png'); */
         }
         
     </style>
