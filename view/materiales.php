@@ -25,8 +25,6 @@ session_start();
     <?php
         echo '<table border="1"><thead><tr><th>Nombre/Identificacion</th><th>Tipo</th><th>Ubicacion</th><th>Mantenimiento</th></tr></thead><tbody>';
 
-        $jsonObject1 = json_decode(file_get_contents("php://input"), true);
-
         $stmt1 = 'SELECT m.*, u.lugar AS ubicacion_mesa
         FROM mesa m
         JOIN ubicacion u ON m.ubicacion_mesa = u.id_ubicacion;

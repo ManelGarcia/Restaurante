@@ -364,22 +364,63 @@ function hist() {
     xhr.send();
 }
 
-function mantem(id) {
+function manten(id) {
     var jsonData = {
-        busqueda: busqueda,
+        id: id,
     };
     var jsonObject = JSON.stringify(jsonData);
 
     var xhr = new XMLHttpRequest();
-    var url = '../view/mesa_mod.php';
+    var url = '../proc/mesa_mod.php';
 
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById('crud').innerHTML = xhr.responseText
-            text();
+            console.log(xhr.responseText);
+        }
+    };
+
+    xhr.send(jsonObject);
+}
+
+function reservaS(id) {
+    var jsonData = {
+        id: id,
+    };
+    var jsonObject = JSON.stringify(jsonData);
+
+    var xhr = new XMLHttpRequest();
+    var url = '../proc/reservaS.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+
+    xhr.send(jsonObject);
+}
+
+function editarUs(id) {
+    var jsonData = {
+        id: id,
+    };
+    var jsonObject = JSON.stringify(jsonData);
+
+    var xhr = new XMLHttpRequest();
+    var url = '../view/edit_us.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('edit_us') = xhr.responseText;
         }
     };
 

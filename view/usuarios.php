@@ -25,31 +25,42 @@ session_start();
     <?php
         $jsonObject1 = json_decode(file_get_contents("php://input"), true);
 
-        $stmt = 'SELECT * FROM usuario WHERE 1=1';
+        $stmt = 'SELECT u.*, r.nombre_rol FROM usuario u INNER JOIN roles r ON u.tipo_us = r.id_rol WHERE 1=1';
 
         if (isset($jsonObject1['busqueda'])) {
             $filter_name = $jsonObject1['busqueda'];
-            $stmt .= ' AND (usuario_us LIKE "%'.$filter_name.'%" OR nombre_us LIKE "%'.$filter_name.'%" OR email_us LIKE "%'.$filter_name.'%")';
+            $stmt .= ' AND (u.usuario_us LIKE "%'.$filter_name.'%" OR u.nombre_us LIKE "%'.$filter_name.'%" OR u.email_us LIKE "%'.$filter_name.'%")';
         }
 
         if (isset($jsonObject1['orden'])) {
             $order_by = $jsonObject1['orden']; 
-            $stmt .= ' ORDER BY '.$order_by;
+            $stmt .= ' ORDER BY u.'.$order_by;
         }
 
         $sql1 = $pdo -> prepare($stmt);
         $sql1 -> execute(); 
 
-        echo '<table border="1"><thead><tr><th>Usuario</th><th>Nombre</th><th>E-Mail</th><th>Tipo</th></tr></thead><tbody>';
+        echo '<table border="1"><thead><tr><th>Usuario <button onclick="sqlFiltro(\'usuario_us\')">v</button></th><th>Nombre <button onclick="sqlFiltro(\'nombre_us\')">v</button></th><th>E-Mail <button onclick="sqlFiltro(\'email_us\')">v</button></th><th>Tipo <button onclick="sqlFiltro(\'nombre_rol\')">v</button></th></tr></thead><tbody>';
         while ($row1 = $sql1->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>'.$row1['usuario_us'].'</td><td>'.$row1['nombre_us'].'</td><td>'.$row1['email_us'].'</td><td>'.$row1['tipo_us'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
+            echo '<tr><td>'.$row1['usuario_us'].'</td><td>'.$row1['nombre_us'].'</td><td>'.$row1['email_us'].'</td><td>'.$row1['nombre_rol'].'</td><td><button onclick=editarUs('.$row1['id_usuario'].')>Editar</button></td></tr>';
         }
         echo '</tbody></table>';
 
 
     ?>
+    <div id='edit_us'></div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 <?php
     } else {

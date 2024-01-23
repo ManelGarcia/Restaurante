@@ -50,7 +50,25 @@
                 $sql_reserva2 -> execute();
                 $resultado_reserva2 = $sql_reserva2 -> fetchAll(PDO::FETCH_ASSOC);
 
+                $sql_reserva3 = $pdo -> prepare("SELECT * FROM reservas WHERE mesa_res = :im ORDER BY inicio_res");
+                
+                $sql_reserva3 -> bindParam(":im", $valor['id_mesa']);
+                $sql_reserva3 -> execute();
+                $resultado_reserva3 = $sql_reserva3 -> fetchAll(PDO::FETCH_ASSOC);
+                
+                $titulo = '';
+                if (!empty($resultado_reserva3)) {
+                    foreach ($resultado_reserva3 as $i => $value) {
+                        $titulo .= 'Reserva'.$resultado_reserva3[$i]['id_reservas'].': '.$resultado_reserva3[$i]['inicio_res'].' - '.$resultado_reserva3[$i]['final_res'].' | ';
+                    }
+                } else {
+                    $titulo = null;
+                }
+
+
+                $mantenimiento = null;
                 $clases = null;
+
                 if ($valor['estado_mesa'] == 1) {
                     $clases = 'ocupado ';
                 }elseif (!empty($resultado_reserva2)) {
@@ -59,6 +77,7 @@
                     $clases = 'libre ';
                 } elseif ($valor['estado_mesa'] == 3) {
                     $clases = 'mantenimiento ';
+                    $mantenimiento = 1;
                 }
 
                 if (!empty($resultado_reserva)) {
@@ -81,14 +100,20 @@
                     }
                 }
 
-                
+                // var_dump($resultado_reserva3);
+                                
+                if (isset($mantenimiento)) {
+                    echo '<div class="' . $clases . '")">';
+                } else {
+                    echo '<div class="' . $clases . '" onclick="openAlert(' . $valor['id_mesa'] . ', \'' . $valor['nombre_mesa'] . '\')" title="'.$titulo.'">';
+                }
 
-                echo '<div class="' . $clases . '" onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)">';
                 if (isset($res)) {
                     echo '<h1>+'.$res.'</h1>';
                 } else {
                     echo ' ';
                 }
+
                 echo '</div>';
             }
         }
