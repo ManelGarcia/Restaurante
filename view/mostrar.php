@@ -18,7 +18,7 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mesas //// Space Delight 👽👽</title>
         <!-- Enlaces a hojas de estilo y recursos externos -->
-        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="shortcut icon" href="../img/OIG.png" type="image/x-icon">
         <link rel="stylesheet" href="../style/mostrar.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,10 +26,11 @@ session_start();
         <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&family=Trispace:wght@500&display=swap" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&family=Trispace:wght@500&display=swap" rel="stylesheet">
         <style>
         body {
             font-family: Arial, sans-serif;
+            color: white;
         }
 
         .overlay {
@@ -44,7 +45,7 @@ session_start();
         }
 
         .alert-box {
-            background: #fff;
+            background: grey !important;
             padding: 20px;
             margin-top: 15%;
             margin-left: 35%;
@@ -58,10 +59,11 @@ session_start();
             display: flex;
         }
 
-        .libre, .ocupado, .mantenimiento, .reservado {
+        .libre, .ocupado, .mantenimiento, .reservado, .reservado-now {
+            background-image: url('../img/mesa_buena.png');
             background-size: cover; 
             background-repeat: no-repeat;
-            background-position: center;            
+            background-position: center;    
             width: 5rem;
             height: 5rem;
             float: left;
@@ -71,29 +73,64 @@ session_start();
         }
 
         .libre {
-            background-image: url('../img/mesa libre.png');
+            background-color: none;
         }
 
         .ocupado {
-            background-image: url('../img/mesa ocupada.png');
+            background-color: red;
         }
 
         .mantenimiento {
-            background-image: url('../img/mesa manten.png');
+            background-color: blue;
+        }
+
+        .reservado-now {
+            background-color: orange;
         }
 
         .reservado {
-            /* background-image: url('../img/mesa libre.png'); */
+            border: 2px dashed coral !important;
         }
+
+        .sala_res {
+            background-color: rgba(255, 255, 255, 0.8); 
+            padding: 0; 
+            margin: 0;
+        }
+
+        .ubicacion {
+            /* display: flex; */
+        }
+
+
         
     </style>
     </head>
 
     <body class="main-body">
         <div>
-            <span onclick='ClickCrud()'>CRUD Usuarios</span><br>
-            <span onclick='ClickCrudM()'>CRUD Materiales</span><br>
-            <span onclick='mesas()'>Mesas</span><br>
+            <?php
+            include_once("../proc/conexion.php");
+
+            $sql = $pdo -> prepare("SELECT tipo_us FROM usuario WHERE usuario_us = :us");
+            $sql->bindParam(':us', $_SESSION["username"]); 
+            $sql->execute(); 
+            $row = $sql->fetch(PDO::FETCH_ASSOC); 
+
+            if ($row['tipo_us'] == 1 ) {
+                echo "<span onclick='ClickCrud()'>CRUD Usuarios</span><br>";
+                echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";
+                echo "<span onclick='mesas()'>Mesas</span><br>";
+            } elseif ($row['tipo_us'] == 3) {
+                echo "<span onclick='mesas()'>Mesas</span><br>";
+                echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";
+            } else {
+                echo "<span onclick='mesas()'>Mesas</span><br>";
+            }
+
+            echo "<span onclick='estad()'>Estadisticas</span><br>";
+            echo "<span onclick='hist()'>Historial</span>";
+            ?>
         </div>
         <div id="body">
 

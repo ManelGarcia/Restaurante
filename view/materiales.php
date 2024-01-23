@@ -36,7 +36,7 @@ session_start();
         $sql1 -> execute(); 
 
         while ($row1 = $sql1->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>Mesa</td><td>'.$row1['ubicacion_mesa'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
+            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>Mesa</td><td>'.$row1['ubicacion_mesa'].'</td></tr>';
         }
 
 
@@ -50,7 +50,7 @@ session_start();
         $sql2 -> execute(); 
 
         while ($row2 = $sql2->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>'.$row2['id_sillas'].'</td><td>Silla</td><td>'.$row2['ubicacion_silla'].'</td><td><button onclick=editarUs()>Editar</button></td></tr>';
+            echo '<tr><td>'.$row2['id_sillas'].'</td><td>Silla</td><td>'.$row2['ubicacion_silla'].'</td></tr>';
         }
         echo '</tbody></table>';
     ?>

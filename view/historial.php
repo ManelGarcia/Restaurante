@@ -2,50 +2,33 @@
 // Inicia la sesión
 session_start();
 
-// Verifica si la variabl de sesion esta creada
+// Verifica si la variable de sesión está creada
 if (isset($_SESSION["username"])) {
-    // Consultas SQL para obtener datos de salas, mesas y camareros
+    // Consultas SQL para obtener datos de salas, mesas y usuarios
     $sqlSalas = "SELECT lugar FROM ubicacion;";
     $sqlMesas = "SELECT id_mesa, nombre_mesa FROM Mesa";
-    $sqlCamareros = "SELECT nombre_cam FROM Camarero";
+    $sqlusuarios = "SELECT nombre_us FROM usuario";
 
     // Incluye el archivo de conexión a la base de datos
     include_once("../proc/conexion.php");
 
     try {
         // Preparación y ejecución de la consulta para obtener salas
-        $stmtSalas = mysqli_prepare($conn, $sqlSalas);
-        mysqli_stmt_execute($stmtSalas);
-        mysqli_stmt_bind_result($stmtSalas, $sala);
-        $salas = array();//creamos array
-        while (mysqli_stmt_fetch($stmtSalas)) {
-            $salas[] = $sala;//guardamos el resultado dentro del array
-        }
+        $stmtSalas = $pdo->prepare($sqlSalas);
+        $stmtSalas->execute();
+        $salas = $stmtSalas->fetchAll(PDO::FETCH_COLUMN);
 
         // Preparación y ejecución de la consulta para obtener mesas
-        $stmtMesas = mysqli_prepare($conn, $sqlMesas);
-        mysqli_stmt_execute($stmtMesas);
-        mysqli_stmt_bind_result($stmtMesas, $idMesa, $nombreMesa);
-        $mesas = array();//creamos array
-        while (mysqli_stmt_fetch($stmtMesas)) {
-            $mesas[] = array('id' => $idMesa, 'nombre' => $nombreMesa);//guardamos el resultado dentro del array
-        }
+        $stmtMesas = $pdo->prepare($sqlMesas);
+        $stmtMesas->execute();
+        $mesas = $stmtMesas->fetchAll(PDO::FETCH_ASSOC);
 
-        // Preparación y ejecución de la consulta para obtener camareros
-        $stmtCamareros = mysqli_prepare($conn, $sqlCamareros);
-        mysqli_stmt_execute($stmtCamareros);
-        mysqli_stmt_bind_result($stmtCamareros, $camarero);
-        $camareros = array();//creamos array
-        while (mysqli_stmt_fetch($stmtCamareros)) {
-            $camareros[] = $camarero;//guardamos el resultado dentro del array
-        }
+        // Preparación y ejecución de la consulta para obtener usuarios
+        $stmtusuarios = $pdo->prepare($sqlusuarios);
+        $stmtusuarios->execute();
+        $usuarios = $stmtusuarios->fetchAll(PDO::FETCH_COLUMN);
 
-        // Cerramos las consultas preparadas
-        mysqli_stmt_close($stmtSalas);
-        mysqli_stmt_close($stmtMesas);
-        mysqli_stmt_close($stmtCamareros);
-
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         // Maneja excepciones
         echo "Error: " . $e->getMessage();
     }
@@ -69,6 +52,11 @@ if (isset($_SESSION["username"])) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&family=Trispace:wght@500&display=swap" rel="stylesheet">
     </head>
+    <style>
+        * {
+            color: white;
+        }
+    </style>
     
     <body>
         <nav class="nav-bar flex iconos">
@@ -108,7 +96,7 @@ if (isset($_SESSION["username"])) {
                 <select name='sala' id="filtros">
                     <option value='Todas' name='Todas'>Todas</option>
                     <?php
-                    //mostramos las salas de la bd que tenemos guardadas en un array
+                    // Mostramos las salas de la base de datos que tenemos guardadas en un array
                     foreach ($salas as $salaOption) {
                         echo "<option name='{$salaOption}' value='{$salaOption}'>{$salaOption}</option>";
                     }
@@ -119,20 +107,20 @@ if (isset($_SESSION["username"])) {
                 <select name='mesa' id="filtros">
                     <option value='Todas' name='Todas'>Todas</option>
                     <?php
-                    //mostramos las mesas de la bd que tenemos guardadas en el array
+                    // Mostramos las mesas de la base de datos que tenemos guardadas en el array
                     foreach ($mesas as $mesaOption) {
                         echo "<option name='{$mesaOption['nombre']}' value='{$mesaOption['nombre']}'>{$mesaOption['nombre']}</option>";
                     }
                     ?>
                 </select>
 
-                <label for='camarero' class="textos">Filtrar por Camarero:</label>
-                <select name='camarero' id="filtros">
+                <label for='usuario' class="textos">Filtrar por usuario:</label>
+                <select name='usuario' id="filtros">
                     <option value='Todos' name='Todos'>Todos</option>
                     <?php
-                    //mostramos los camareros de la bd que tenemos guardados en el array
-                    foreach ($camareros as $camareroOption) {
-                        echo "<option name='{$camareroOption}' value='{$camareroOption}'>{$camareroOption}</option>";
+                    // Mostramos los usuarios de la base de datos que tenemos guardados en el array
+                    foreach ($usuarios as $usuarioOption) {
+                        echo "<option name='{$usuarioOption}' value='{$usuarioOption}'>{$usuarioOption}</option>";
                     }
                     ?>
                 </select>
@@ -153,95 +141,97 @@ if (isset($_SESSION["username"])) {
        
         // Definir la consulta inicial para mostrar toda la tabla
         $sql = "SELECT
-                DATE_FORMAT(T.inicio, '%d/%m/%y %H:%i:%s') AS TiempoInicio,
-                DATE_FORMAT(T.final, '%d/%m/%y %H:%i:%s') AS TiempoFinal,
+                DATE_FORMAT(T.inicio_tmp, '%d/%m/%y %H:%i:%s') AS Tiempoinicio_tmp,
+                DATE_FORMAT(T.final_tmp, '%d/%m/%y %H:%i:%s') AS Tiempofinal_tmp,
                 U.lugar AS Sala,
                 M.nombre_mesa AS NombreMesa,
-                C.nombre_cam AS NombreCamarero,
-                TIMEDIFF(T.final, T.inicio) AS TiempoTranscurrido
+                C.nombre_us AS Nombreusuario,
+                TIMEDIFF(T.final_tmp, T.inicio_tmp) AS TiempoTranscurrido
             FROM Tiempo T
             JOIN Mesa M ON T.mesa_tmp = M.id_mesa
-            JOIN Camarero C ON T.camarero_tmp = C.id_camarero
+            JOIN usuario C ON T.camarero_tmp = C.id_usuario
             JOIN Ubicacion U ON M.ubicacion_mesa = U.id_ubicacion";
 
         // Aplicar el filtrado si se hizo clic en el botón de filtrar
         if (isset($_POST['filtrar'])) {
-            //obtenemos los datos del formulario y los guardamos en variables
+            // Obtener los datos del formulario y guardarlos en variables
             $filtroSala = isset($_POST['sala']) ? $_POST['sala'] : 'Todas';
             $filtroMesa = isset($_POST['mesa']) ? $_POST['mesa'] : 'Todas';
-            $filtroCamarero = isset($_POST['camarero']) ? $_POST['camarero'] : 'Todos';
-            //creamos array para las condiciones
+            $filtrousuario = isset($_POST['usuario']) ? $_POST['usuario'] : 'Todos';
+            // Crear array para las condiciones
             $condiciones = array();
-            //si filtroSala no marca todas añadimos condicion
+            // Si filtroSala no marca todas, añadimos condición
             if ($filtroSala != 'Todas') {
                 $condiciones[] = "U.lugar = '{$filtroSala}'";
             }
-            //si filtroMesa no marca todas añadimos condicion
+            // Si filtroMesa no marca todas, añadimos condición
             if ($filtroMesa != 'Todas') {
                 $condiciones[] = "M.nombre_mesa = '{$filtroMesa}'";
             }
-            //si filtroCamarero no marca todos añadimos condicion
-            if ($filtroCamarero != 'Todos') {
-                $condiciones[] = "C.nombre_cam = '{$filtroCamarero}'";
+            // Si filtrousuario no marca todos, añadimos condición
+            if ($filtrousuario != 'Todos') {
+                $condiciones[] = "C.nombre_us = '{$filtrousuario}'";
             }
-            //si recibimos la fecha
+            // Si recibimos la fecha
             if (isset($_POST['fecha']) && !empty($_POST['fecha'])) {
-                //lo guardamos en variable
-                $filtroFecha = mysqli_real_escape_string($conn, $_POST['fecha']);
-                $condiciones[] = "DATE(T.inicio) = '{$filtroFecha}'";
+                // Guardamos la fecha en una variable
+                $filtroFecha = htmlspecialchars($_POST['fecha']);
+                $condiciones[] = "DATE(T.inicio_tmp) = '{$filtroFecha}'";
             }
-            //si hay condiciones añadimos a la consulta sql inicial un where con la condicion
+            // Si hay condiciones, añadimos a la consulta SQL inicial un WHERE con la condición
             if (!empty($condiciones)) {
                 $sql .= " WHERE " . implode(' AND ', $condiciones);
             }
         }
-    //ordenamos de forma descendente para que nos salgan las nuevas ocupaciones arriba de la tabla
-    $sql .= " ORDER BY TiempoInicio DESC";
-    try{
-        //preparamos stmt, ejecutamos y obtenemos resultados
-        $stmt = mysqli_prepare($conn, $sql);
+        // Ordenamos de forma descendente para que las nuevas ocupaciones aparezcan arriba de la tabla
+        $sql .= " ORDER BY Tiempoinicio_tmp DESC";
+        try {
+            // Preparamos el statement, ejecutamos y obtenemos resultados
+            $stmt = $pdo->prepare($sql);
 
-        if ($stmt) {
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_bind_result($stmt, $tiempoInicio, $tiempoFinal, $sala, $nombreMesa, $nombreCamarero, $tiempoTranscurrido);
+            if ($stmt) {
+                $stmt->execute();
+                $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Verificar si hay resultados
-            if (mysqli_stmt_fetch($stmt)) {
-                echo "<table class='table mt-3' style='display:flex; justify-content:center; text-align:center; font-size:25px;'>
-                        <tr>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo de Inicio</th>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo Final</th>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Sala</th>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Mesa</th>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Camarero</th>
-                            <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo Transcurrido</th>
-                        </tr>";
+                // Verificar si hay resultados
+                if ($resultados) {
+                    echo "<table class='table mt-3' style='display:flex; justify-content:center; text-align:center; font-size:25px;'>
+                            <tr>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo de inicio_tmp</th>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo final_tmp</th>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Sala</th>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Mesa</th>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>usuario</th>
+                                <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo Transcurrido</th>
+                            </tr>";
 
-                do {
-                    echo "<tr>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$tiempoInicio</td>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$tiempoFinal</td>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$sala</td>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$nombreMesa</td>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$nombreCamarero</td>
-                            <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>$tiempoTranscurrido</td>
-                        </tr>";
-                } while (mysqli_stmt_fetch($stmt));
+                    foreach ($resultados as $fila) {
+                        echo "<tr>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['Tiempoinicio_tmp']}</td>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['Tiempofinal_tmp']}</td>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['Sala']}</td>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['NombreMesa']}</td>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['Nombreusuario']}</td>
+                                <td style='border-top-width: 2px; border-bottom: 2px solid #03cc57;'>{$fila['TiempoTranscurrido']}</td>
+                            </tr>";
+                    }
 
-                echo "</table>";
-            } else {
-                echo "<p class='texto3'>NO SE ENCONTRARON REGISTROS</p>";
-                
+                    echo "</table>";
+                } else {
+                    echo "<p class='texto3'>NO SE ENCONTRARON REGISTROS</p>";
+                }
             }
-            mysqli_stmt_close($stmt);//cerramos stmt
-        } 
 
-        mysqli_close($conn);//cerramos conexion
-   
-    }
-    catch(Exception $e){
-        echo "Error: ". $e->getMessage() ."";//maneja excepciones
-    }
+            // Cerramos el statement
+            $stmt = null;
+
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage(); // Maneja excepciones
+        }
+
+        // Cerramos la conexión
+        $pdo = null;
+
         ?>
     </body>
     <!-- Agrega el enlace al archivo JS de Bootstrap (opcional) -->
@@ -250,6 +240,7 @@ if (isset($_SESSION["username"])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </html>
 <?php
-}else {
-    header("Location: ../index.php");//si no hay variable de sesion redirijimos al index
+} else {
+    header("Location: ../index.php"); // Si no hay variable de sesión, redirigimos al index
 }
+?>

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1 id="titulo">USUARIOS</h3>
+<h1 id="titulo">RECURSOS</h3>
 
 <div class='page-border'>
     <div id="header" class='paragraph flex'>

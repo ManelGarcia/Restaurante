@@ -1,21 +1,28 @@
 /* Aplicamos la fuente 'Dosis' a todos los elementos de la página */
+
 * {
     font-family: 'Dosis', sans-serif;
 }
 
+
 /* Estilos para el primer tipo de elemento con clase 'style-1' */
+
 .style-1 {
     background-color: FireBrick;
     color: white;
 }
 
+
 /* Estilos para el segundo tipo de elemento con clase 'style-2' */
+
 .style-2 {
     background-color: SeaGreen;
     color: white;
 }
 
+
 /* Estilos para la barra de pestañas */
+
 .tabs {
     display: flex;
     list-style: none;
@@ -23,7 +30,9 @@
     padding-right: 28px;
 }
 
+
 /* Estilos para cada pestaña en la barra de pestañas */
+
 .tab {
     margin-left: 40px;
     cursor: pointer;
@@ -33,12 +42,16 @@
     border-radius: 5px 5px 0 0;
 }
 
+
 /* Estilo para el bloque */
+
 .block {
     display: block;
 }
 
+
 /* Estilos específicos para pestañas individuales */
+
 #tab1 {
     justify-content: space-between;
 }
@@ -53,7 +66,9 @@
     justify-content: space-between;
 }
 
+
 /* Estilos para pestañas más pequeñas */
+
 .tab-small {
     margin-right: 10px;
     cursor: pointer;
@@ -63,24 +78,32 @@
     border-radius: 2px 2px 0 0;
 }
 
+
 /* Efecto de hover para las pestañas */
+
 .tab:hover {
     background-color: #ddd;
 }
 
+
 /* Estilos para el contenido de las pestañas */
+
 .tab-content {
     display: none;
     padding: 16px;
     border-radius: 0 0 5px 5px;
 }
 
+
 /* Mostrar contenido activo de la pestaña */
+
 .tab-content.active {
     display: block;
 }
 
+
 /* Estilos para planos de planta */
+
 .floorPlan {
     background-size: contain;
     background-repeat: no-repeat;
@@ -94,7 +117,9 @@
     height: 50vh;
 }
 
+
 /* Estilos para diferentes secciones con imágenes de fondo */
+
 #comedor1 {
     background-image: url('../img/comedor1.jpg');
 }
@@ -131,12 +156,16 @@
     background-image: url('../img/privada4.jpg');
 }
 
+
 /* Estilos para elementos con clase 'mesa' */
+
 .mesa {
     cursor: pointer;
 }
 
+
 /* Estilos para mesas específicas */
+
 .mesa19,
 .mesa20,
 .mesa21,
@@ -150,15 +179,20 @@
     padding-left: 70px;
 }
 
+
 /**********************************************************************************************************/
 
+
 /* Estilos generales para el cuerpo de la página */
+
 body {
     background-image: url(../img/fondo4\ \(1\).png);
     margin-top: 50px;
 }
 
+
 /* Pseudo-elemento 'before' para un fondo oscuro con opacidad */
+
 body::before {
     content: "";
     width: 100%;
@@ -170,7 +204,9 @@ body::before {
     z-index: -1;
 }
 
+
 /* Estilos para tablas */
+
 table {
     border-radius: 3vh 3vh 3vh 3vh;
     border-spacing: 0 3px;
@@ -183,7 +219,9 @@ table {
     float: left;
 }
 
+
 /* Estilos para títulos en tablas */
+
 .titulos {
     border-top-width: 2px;
     border-bottom-width: 2px;
@@ -191,7 +229,9 @@ table {
     border-top: 2px solid black;
 }
 
+
 /* Estilos generales para tablas y texto en tablas */
+
 .table {
     color: #000000;
 }
@@ -202,36 +242,46 @@ table {
     color: white;
 }
 
+
 /* Estilos para el título principal */
+
 #titulo {
     display: flex;
     justify-content: center;
+    width: 100vw !important;
     font-size: 4.5rem;
     color: #03cc57;
     font-family: 'Dosis', sans-serif;
     font-family: 'Trispace', sans-serif;
-    padding-right: 130px;
 }
 
+
 /* Estilos para encabezado */
+
 header {
     display: flex;
     justify-content: center;
 }
 
+
 /* Estilos para centrar elementos */
+
 #centrar {
     display: flex;
     justify-content: center;
 }
 
+
 /* Estilos para elementos con id 'filtrar' */
+
 #filtrar {
     border-radius: 1vh 1vh 1vh 1vh;
     background-color: #000000;
 }
 
+
 /* Estilos para elementos con id 'filtros' y efecto de hover */
+
 #filtros {
     border-radius: 1vh 1vh 1vh 1vh;
     border: 3px solid #03cc57;
@@ -245,7 +295,9 @@ header {
     color: black;
 }
 
+
 /* Estilos para texto */
+
 .textos {
     color: white;
     font-size: 18px;
@@ -266,7 +318,9 @@ header {
     font-size: 40px;
 }
 
+
 /* Estilos para texto específico */
+
 .textos4 {
     color: white;
     font-size: 24px;
@@ -282,7 +336,9 @@ header {
     font-family: 'Trispace', sans-serif;
 }
 
+
 /* Estilos para iconos */
+
 #icono {
     float: left;
     width: 50px;
@@ -297,7 +353,9 @@ header {
     margin-top: 20px;
 }
 
+
 /* Estilos para efecto de opacidad al hacer hover */
+
 .div1 {
     position: relative;
 }
@@ -314,7 +372,9 @@ header {
     opacity: 1;
 }
 
+
 /* Estilos para diseño flexible y ubicación */
+
 .flex {
     display: flex;
     justify-content: center;
@@ -331,9 +391,12 @@ header {
     height: 30%;
 }
 
+
 /***********************************/
 
+
 /* Estilos para botones con efecto de hover */
+
 .btn {
     position: relative;
     padding: 20px 50px;

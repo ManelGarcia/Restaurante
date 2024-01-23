@@ -1,4 +1,5 @@
 <?php  
+    echo '<div class="sala_res">';
     $jsonObject1 = json_decode(file_get_contents("php://input"), true);
 
     if (isset($jsonObject1['selector'])) {
@@ -37,24 +38,31 @@
             echo $select;
         } else {
             foreach ($resultado as $valor) {
-                $sql_reserva = $pdo -> prepare("SELECT * FROM reservas WHERE mesa_res = :im");
+                $sql_reserva = $pdo -> prepare("SELECT * FROM reservas WHERE mesa_res = :im AND CURRENT_TIMESTAMP < inicio_res");
                 
                 $sql_reserva -> bindParam(":im", $valor['id_mesa']);
                 $sql_reserva -> execute();
                 $resultado_reserva = $sql_reserva -> fetchAll(PDO::FETCH_ASSOC);
 
-                // var_dump($resultado);
+                $sql_reserva2 = $pdo -> prepare("SELECT * FROM reservas WHERE mesa_res = :im AND CURRENT_TIMESTAMP > inicio_res AND CURRENT_TIMESTAMP < final_res");
+                
+                $sql_reserva2 -> bindParam(":im", $valor['id_mesa']);
+                $sql_reserva2 -> execute();
+                $resultado_reserva2 = $sql_reserva2 -> fetchAll(PDO::FETCH_ASSOC);
 
+                $clases = null;
                 if ($valor['estado_mesa'] == 1) {
                     $clases = 'ocupado ';
-                } elseif ($valor['estado_mesa'] == 2) {
+                }elseif (!empty($resultado_reserva2)) {
+                    $clases .= 'reservado-now ';
+                } elseif ($valor['estado_mesa'] == 2 && empty($resultado_reserva2)) {
                     $clases = 'libre ';
-                } else {
+                } elseif ($valor['estado_mesa'] == 3) {
                     $clases = 'mantenimiento ';
                 }
 
                 if (!empty($resultado_reserva)) {
-                    $clases .= 'reservado';
+                    $clases .= 'reservado ';
                 }
 
                 $res = null;
@@ -73,7 +81,6 @@
                     }
                 }
 
-                // echo '<p  class="'.$clases.'" >'.$sillas.' TT</p>';
                 echo '<div class="' . $clases . '" onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)">';
                 if (isset($res)) {
                     echo '<h1>+'.$res.'</h1>';
@@ -81,9 +88,9 @@
                     echo ' ';
                 }
                 echo '</div>';
-                
             }
         }
+        echo '</div>'; 
 
 
         

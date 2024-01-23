@@ -289,7 +289,7 @@ function ClickCrudM() {
 
 function crudMa() {
     var xhr = new XMLHttpRequest();
-    var url = '../view/CRUD.php';
+    var url = '../view/CRUD_M.php';
 
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
@@ -297,21 +297,11 @@ function crudMa() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById('body').innerHTML = xhr.responseText;
-            text2();
+            sqlFiltroMa();
         }
     };
 
     xhr.send();
-}
-
-function text2() {
-    var busqueda = document.getElementById('busqueda');
-    busqueda.removeEventListener("keyup", handleBusqueda2);
-    busqueda.addEventListener("keyup", handleBusqueda2);
-}
-
-function handleBusqueda2(e) {
-    sqlFiltroMa(e.target.value);
 }
 
 function sqlFiltroMa(busqueda) {
@@ -332,7 +322,8 @@ function sqlFiltroMa(busqueda) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById('crud').innerHTML = xhr.responseText
-            text2();
+            document.getElementById('header').style.visibility = 'hidden';
+
         }
     };
 
@@ -342,4 +333,34 @@ function sqlFiltroMa(busqueda) {
         xhr.send();
     }
 
+}
+
+function estad() {
+    var xhr = new XMLHttpRequest();
+    var url = '../view/estadisticas.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        var body = document.getElementById('body')
+        body.innerHTML = xhr.responseText
+    };
+
+    xhr.send();
+}
+
+function hist() {
+    var xhr = new XMLHttpRequest();
+    var url = '../view/historial.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        var body = document.getElementById('body')
+        body.innerHTML = xhr.responseText
+    };
+
+    xhr.send();
 }

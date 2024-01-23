@@ -58,7 +58,7 @@ try {
             $sql_update_tiempo -> bindParam(":ic", $resultado2[0]['id_usuario']);
             $sql_update_tiempo -> execute();
 
-            $sql_mover_sillas = $pdo -> prepare("UPDATE sillas SET mesa_act = mesa_asig WHERE mesa_act = :im");
+            $sql_mover_sillas = $pdo -> prepare("UPDATE sillas SET mesa_act = mesa_asig WHERE mesa_act <> :im");
 
             $sql_mover_sillas -> bindParam(":im", $idMesa);
             $sql_mover_sillas -> execute();    
@@ -120,7 +120,7 @@ try {
                 $sql_reservar_sillas -> execute();
             }
 
-            // $sql3 = $pdo -> prepare("UPDATE reservas SET silla_res VALUES (:ta, :ft, :im, :ic)");
+            // $sql3 = $pdo -> prepare("UPDATE reservas SET  VALUES (:ta, :ft, :im, :ic)");
     
             // $sql3 -> bindParam(":ta", $fechaHora);        
             // $sql3 -> bindParam(":ft", $fechaHoraFin);
