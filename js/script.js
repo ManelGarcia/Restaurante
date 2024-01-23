@@ -322,8 +322,7 @@ function sqlFiltroMa(busqueda) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById('crud').innerHTML = xhr.responseText
-            document.getElementById('header').style.visibility = 'hidden';
-
+            document.getElementById('header').style.display = 'none';
         }
     };
 
@@ -363,4 +362,26 @@ function hist() {
     };
 
     xhr.send();
+}
+
+function mantem(id) {
+    var jsonData = {
+        busqueda: busqueda,
+    };
+    var jsonObject = JSON.stringify(jsonData);
+
+    var xhr = new XMLHttpRequest();
+    var url = '../view/mesa_mod.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('crud').innerHTML = xhr.responseText
+            text();
+        }
+    };
+
+    xhr.send(jsonObject);
 }

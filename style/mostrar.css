@@ -194,7 +194,7 @@ body::before {
     content: "";
     width: 100%;
     min-height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: #000000b6;
@@ -383,6 +383,19 @@ header {
     text-align: center;
 }
 
+.main-body {
+    margin: 0;
+}
+
+.nav {
+    background-color: black;
+    padding: 0.5rem;
+}
+
+.nav span {
+    margin: 1rem;
+}
+
 
 /* Estilos para iconos flotantes */
 
@@ -395,7 +408,7 @@ header {
 
 .ubicacion {
     text-align: center;
-    width: 60%;
+    /* width: 60%; */
 }
 
 

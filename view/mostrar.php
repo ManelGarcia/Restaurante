@@ -77,7 +77,7 @@ session_start();
         }
 
         .ocupado {
-            background-color: red;
+            background-color: FireBrick;
         }
 
         .mantenimiento {
@@ -108,7 +108,7 @@ session_start();
     </head>
 
     <body class="main-body">
-        <div>
+        <div class='nav'>
             <?php
             include_once("../proc/conexion.php");
 
@@ -118,9 +118,9 @@ session_start();
             $row = $sql->fetch(PDO::FETCH_ASSOC); 
 
             if ($row['tipo_us'] == 1 ) {
+                echo "<span onclick='mesas()'>Mesas</span><br>";
                 echo "<span onclick='ClickCrud()'>CRUD Usuarios</span><br>";
                 echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";
-                echo "<span onclick='mesas()'>Mesas</span><br>";
             } elseif ($row['tipo_us'] == 3) {
                 echo "<span onclick='mesas()'>Mesas</span><br>";
                 echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";

@@ -81,6 +81,8 @@
                     }
                 }
 
+                
+
                 echo '<div class="' . $clases . '" onclick="openAlert('.$valor['id_mesa'].', `'.$valor['nombre_mesa'].'`)">';
                 if (isset($res)) {
                     echo '<h1>+'.$res.'</h1>';

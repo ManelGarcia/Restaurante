@@ -10,7 +10,7 @@
 
 <div class='page-border'>
     <div id="header" class='paragraph flex'>
-        <label for="busqueda">Busqueda</label>
+        <label for="busqueda">Busqueda</label><br><br>
         <input id="busqueda" type="text"><br><br>
     </div>
     <div id='crud'>

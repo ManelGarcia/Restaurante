@@ -23,7 +23,7 @@ session_start();
 <body>
     <br>
     <?php
-        echo '<table border="1"><thead><tr><th>Nombre/Identificacion</th><th>Tipo</th><th>Ubicacion</th></tr></thead><tbody>';
+        echo '<table border="1"><thead><tr><th>Nombre/Identificacion</th><th>Tipo</th><th>Ubicacion</th><th>Mantenimiento</th></tr></thead><tbody>';
 
         $jsonObject1 = json_decode(file_get_contents("php://input"), true);
 
@@ -36,7 +36,7 @@ session_start();
         $sql1 -> execute(); 
 
         while ($row1 = $sql1->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>Mesa</td><td>'.$row1['ubicacion_mesa'].'</td></tr>';
+            echo '<tr><td>'.$row1['nombre_mesa'].'</td><td>Mesa</td><td>'.$row1['ubicacion_mesa'].'</td><td><button onclick="manten('.$row1['id_mesa'].')">Mantenimiento</button></td></tr>';
         }
 
 

@@ -40,7 +40,7 @@
             <!-- Botón para aplicar el filtro -->
         </form><br>
     </div>
-    <div id="mesas-div" class="tab-content flex tab-otro">
+    <div id="mesas-div" style='margin: 1rem;' class="flex">
     </div>
     <br>
     <div id='alerta'></div>
