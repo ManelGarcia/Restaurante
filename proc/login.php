@@ -98,8 +98,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $stmt = null;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-    } finally {
-        $pdo = null;
     }
 
 } else {

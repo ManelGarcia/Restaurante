@@ -34,7 +34,7 @@ table {
     border-spacing: 0 3px;
     border-color: #000000;
     border-collapse: collapse;
-    width: 40px;
+    width: 100%;
 }
 
 .header {

@@ -130,6 +130,7 @@ session_start();
 
             echo "<span onclick='estad()'>Estadisticas</span><br>";
             echo "<span onclick='hist()'>Historial</span>";
+            echo '<span><a style="text-decoration: none; color: white" href="../proc/cerrar_sesion.php">Log Out</a></span>';
             ?>
         </div>
         <div id="body">

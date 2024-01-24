@@ -210,7 +210,6 @@ function cambiarEstado(jsonData) {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-
             console.log(xhr.responseText);
             closeAlert();
             showMesas();
@@ -342,8 +341,10 @@ function estad() {
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function() {
-        var body = document.getElementById('body')
-        body.innerHTML = xhr.responseText
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var body = document.getElementById('body')
+            body.innerHTML = xhr.responseText
+        }
     };
 
     xhr.send();
@@ -357,8 +358,10 @@ function hist() {
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function() {
-        var body = document.getElementById('body')
-        body.innerHTML = xhr.responseText
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var body = document.getElementById('body')
+            body.innerHTML = xhr.responseText
+        }
     };
 
     xhr.send();
@@ -420,7 +423,45 @@ function editarUs(id) {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById('edit_us') = xhr.responseText;
+            document.getElementById('edit_us').innerHTML = xhr.responseText;
+        }
+    };
+
+    xhr.send(jsonObject);
+}
+
+function closeAlertUs() {
+    document.getElementById('edit_us').innerHTML = null;
+}
+
+function changeUs() {
+    var id = document.getElementById('id_user').value;
+    var user = document.getElementById('usuario_us').value;
+    var name = document.getElementById('nombre_us').value;
+    var email = document.getElementById('email_us').value;
+    var type = document.getElementById('tipo_us').value;
+
+    var jsonData = {
+        id: id,
+        user: user,
+        name: name,
+        email: email,
+        type: type,
+    };
+
+    var jsonObject = JSON.stringify(jsonData);
+
+    var xhr = new XMLHttpRequest();
+    var url = '../proc/alter_us.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            closeAlertUs();
+            ClickCrud();
         }
     };
 

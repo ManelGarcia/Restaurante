@@ -59,83 +59,7 @@ if (isset($_SESSION["username"])) {
     </style>
     
     <body>
-        <nav class="nav-bar flex iconos">
-            <div class="div1">
-                <div>
-                    <a href="../proc/cerrar_sesion.php"><img src="../img/logoutblanco.png" alt="Cerrar sesión" id="icono"></a>
-                </div>
-                <div class="div2">
-                    <a href="../proc/cerrar_sesion.php"><img src="../img/logoutverde.png" alt="Cerrar sesión" id="icono2"></a>
-                </div>
-            </div>
-            <div class="div1">
-                <div>
-                    <a href="./mostrar.php"><img src="../img/casablanca.png" alt="Home" id="icono"></a>
-                </div>
-                <div class="div2">
-                    <a href="./mostrar.php"><img src="../img/casaverde.png" alt="Home" id="icono2"></a>
-                </div>
-            </div>
-            <div class="div1">
-                <div>
-                    <a href="./estadisticas.php"><img src="../img/estadisticablanca.png" alt="Estadísticas" id="icono"></a>
-                </div>
-                <div class="div2">
-                    <a href="./estadisticas.php"><img src="../img/estadisticaverde.png" alt="Estadísticas" id="icono2"></a>
-                </div>
-            </div>
-            
-            <br>
-        </nav>
-
         <h1 id="titulo">Historial</h1>
-
-        <header>
-            <form action='' method='post'>
-                <label for='sala' class="textos">Filtrar por Sala:</label>
-                <select name='sala' id="filtros">
-                    <option value='Todas' name='Todas'>Todas</option>
-                    <?php
-                    // Mostramos las salas de la base de datos que tenemos guardadas en un array
-                    foreach ($salas as $salaOption) {
-                        echo "<option name='{$salaOption}' value='{$salaOption}'>{$salaOption}</option>";
-                    }
-                    ?>
-                </select>
-
-                <label for='mesa' class="textos">Filtrar por Mesa:</label>
-                <select name='mesa' id="filtros">
-                    <option value='Todas' name='Todas'>Todas</option>
-                    <?php
-                    // Mostramos las mesas de la base de datos que tenemos guardadas en el array
-                    foreach ($mesas as $mesaOption) {
-                        echo "<option name='{$mesaOption['nombre']}' value='{$mesaOption['nombre']}'>{$mesaOption['nombre']}</option>";
-                    }
-                    ?>
-                </select>
-
-                <label for='usuario' class="textos">Filtrar por usuario:</label>
-                <select name='usuario' id="filtros">
-                    <option value='Todos' name='Todos'>Todos</option>
-                    <?php
-                    // Mostramos los usuarios de la base de datos que tenemos guardados en el array
-                    foreach ($usuarios as $usuarioOption) {
-                        echo "<option name='{$usuarioOption}' value='{$usuarioOption}'>{$usuarioOption}</option>";
-                    }
-                    ?>
-                </select>
-                
-                <label for="fecha" class="textos">Filtrar por Fecha</label>
-                <input type="date" name="fecha" id="filtros">
-                <br>
-                <br>
-                <div id='centrar'>
-                    <button type='submit' name='filtrar' value='Filtrar' id="filtrar" class="btn btn-1" onclick="return validarFecha();">Filtrar</button>
-                </div>
-            </form>
-        </header>
-        <br>
-        <br>
 
         <?php
        
@@ -195,7 +119,7 @@ if (isset($_SESSION["username"])) {
 
                 // Verificar si hay resultados
                 if ($resultados) {
-                    echo "<table class='table mt-3' style='display:flex; justify-content:center; text-align:center; font-size:25px;'>
+                    echo "<table class='table mt-3' style='display:flex; justify-content:center; text-align:center; font-size:25px; margin: 0;'>
                             <tr>
                                 <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo de inicio_tmp</th>
                                 <th style='border-top-width: 2px; border-top: 2px solid #03cc57;'>Tiempo final_tmp</th>
