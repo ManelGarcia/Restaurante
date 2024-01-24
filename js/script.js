@@ -467,3 +467,20 @@ function changeUs() {
 
     xhr.send(jsonObject);
 }
+
+
+function ClickReservas() {
+    var xhr = new XMLHttpRequest();
+    var url = '../view/reservas.php';
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('body').innerHTML = xhr.responseText;
+        }
+    };
+
+    xhr.send();
+}

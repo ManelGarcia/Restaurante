@@ -47,7 +47,7 @@ session_start();
         .alert-box {
             background: grey !important;
             padding: 20px;
-            margin-top: 15%;
+            margin-top: 10%;
             margin-left: 35%;
             width: 30rem;
             height: 20rem;
@@ -121,11 +121,13 @@ session_start();
                 echo "<span onclick='mesas()'>Mesas</span><br>";
                 echo "<span onclick='ClickCrud()'>CRUD Usuarios</span><br>";
                 echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";
+                echo "<span onclick='ClickReservas()'>Reservas</span><br>";
             } elseif ($row['tipo_us'] == 3) {
                 echo "<span onclick='mesas()'>Mesas</span><br>";
                 echo "<span onclick='ClickCrudM()'>CRUD Materiales</span><br>";
             } else {
                 echo "<span onclick='mesas()'>Mesas</span><br>";
+                echo "<span onclick='ClickReservas()'>Reservas</span><br>";
             }
 
             echo "<span onclick='estad()'>Estadisticas</span><br>";
